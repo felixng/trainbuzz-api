@@ -57,9 +57,9 @@ var keywordStats = {};
 // --------------------------------------------------------------------
 var Pusher = require("pusher");
 var pusher = new Pusher({
-  appId: '394572',
-  key: 'a241ae67ddcfcdfe572c',
-  secret: '0108c33172467f4c0452',
+  appId: config.pusher_app_id,
+  key: config.pusher_key,
+  secret: config.pusher_secret,
   cluster: 'eu',
   host: 'api-eu.pusher.com',
   encrypted: true
