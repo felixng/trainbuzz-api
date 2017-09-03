@@ -57,10 +57,12 @@ var keywordStats = {};
 // --------------------------------------------------------------------
 var Pusher = require("pusher");
 var pusher = new Pusher({
-  appId: config.pusher_app_id,
-  key: config.pusher_key,
-  secret: config.pusher_secret,
-  cluster: "eu"
+  appId: '394572',
+  key: 'a241ae67ddcfcdfe572c',
+  secret: '0108c33172467f4c0452',
+  cluster: 'eu',
+  host: 'api-eu.pusher.com',
+  encrypted: true
 });
 
 
@@ -241,7 +243,11 @@ var updateStats = function() {
   log(statsPayload);
 
   // Send stats update via Pusher
+  console.log(statsPayload);
   pusher.trigger("stats", "update", statsPayload);
+  pusher.trigger('my-channel', 'my-event', {
+    "message": "hello world"
+  });
 
   statsPayload = undefined;
 
