@@ -290,7 +290,7 @@ var startStream = function() {
     if (streamRetryCount > 0) {
       streamRetryCount = 0;
     }
-    
+    console.log(tweet.text);
     processTweet(tweet);
   });
 
