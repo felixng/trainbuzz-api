@@ -263,8 +263,8 @@ updateStats();
 var twit = new twitter({
   consumer_key: config.twitter_consumer_key,
   consumer_secret: config.twitter_consumer_secret,
-  access_token_key: config.twitter_access_token_key,
-  access_token_secret: config.twitter_access_token_secret
+  // access_token_key: config.twitter_access_token_key,
+  // access_token_secret: config.twitter_access_token_secret
 });
 
 var twitterStream;
