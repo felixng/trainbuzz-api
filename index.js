@@ -334,7 +334,7 @@ var restartStream = function() {
 };
 
 var processTweet = function(tweet) {
-  console.log("tweet");
+  console.log(tweet);
   // Look for keywords within text
   _.each(keywords, function(keyword) {
     if (tweet.text && tweet.text.toLowerCase().indexOf(keyword.toLowerCase()) > -1) {
