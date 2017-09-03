@@ -1,5 +1,5 @@
 var _ = require("underscore");
-var twitter = require("twitter");
+var Twit = require("twit");
 
 var express = require("express");
 var bodyParser = require("body-parser");
@@ -243,11 +243,8 @@ var updateStats = function() {
   log(statsPayload);
 
   // Send stats update via Pusher
-  console.log(statsPayload);
+  // console.log(statsPayload);
   pusher.trigger("stats", "update", statsPayload);
-  pusher.trigger('my-channel', 'my-event', {
-    "message": "hello world"
-  });
 
   statsPayload = undefined;
 
@@ -267,11 +264,12 @@ updateStats();
 // SET UP TWITTER
 // --------------------------------------------------------------------
 
-var twit = new twitter({
+var T = new Twit({
   consumer_key: config.twitter_consumer_key,
   consumer_secret: config.twitter_consumer_secret,
-  // access_token_key: config.twitter_access_token_key,
-  // access_token_secret: config.twitter_access_token_secret
+  // app_only_auth: true,
+  access_token: config.twitter_access_token_key,
+  access_token_secret: config.twitter_access_token_secret
 });
 
 var twitterStream;
@@ -284,30 +282,28 @@ var startStream = function() {
 
   log('tracking', tracking);
 
-  twit.stream("filter", {
+  twitterStream = T.stream("statuses/filter", {
     track: tracking
-  }, function(stream) {
-    twitterStream = stream;
+  });
 
-    twitterStream.on("data", function onTweetClosure(data) {
-      if (streamRetryCount > 0) {
-        streamRetryCount = 0;
-      }
-      
-      processTweet(data);
-    });
+  twitterStream.on("tweet", function(tweet) {
+    if (streamRetryCount > 0) {
+      streamRetryCount = 0;
+    }
+    
+    processTweet(tweet);
+  });
 
-    twitterStream.on("error", function(error) {
-      console.log("Error");
-      console.log(error);
+  twitterStream.on("error", function(error) {
+    console.log("Error");
+    console.log(error);
 
-      setImmediate(restartStream);
-    });
+    setImmediate(restartStream);
+  });
 
-    twitterStream.on("end", function(response) {
-      console.log("Stream end");
-      setImmediate(restartStream);
-    });
+  twitterStream.on("disconnect", function(response) {
+    console.log("Stream end");
+    setImmediate(restartStream);
   });
 };
 
@@ -338,6 +334,7 @@ var restartStream = function() {
 };
 
 var processTweet = function(tweet) {
+  console.log("tweet");
   // Look for keywords within text
   _.each(keywords, function(keyword) {
     if (tweet.text && tweet.text.toLowerCase().indexOf(keyword.toLowerCase()) > -1) {
