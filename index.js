@@ -348,5 +348,15 @@ var processTweet = function(tweet) {
   });
 };
 
+var dailySummary = function(){
+  console.log('testing');
+}
+
 // Start stream after short timeout to avoid triggering multi-connection errors
 setTimeout(startStream, 2000);
+
+// Cron Jobs
+var CronJob = require('cron').CronJob;
+new CronJob('30 0 * * * *', function() {
+  dailySummary();
+}, null, true, 'Europe/London');
