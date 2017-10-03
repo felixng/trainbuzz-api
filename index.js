@@ -349,7 +349,9 @@ var processTweet = function(tweet) {
 };
 
 var dailySummary = function(){
-  console.log('testing');
+  T.post('statuses/update', { status: 'hello world!' }, function(err, data, response) {
+    console.log(data)
+  });
 }
 
 // Start stream after short timeout to avoid triggering multi-connection errors
