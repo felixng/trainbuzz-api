@@ -173,7 +173,7 @@ app.use(function(req, res, next){
 });
 
 // Open server on specified port
-var port = process.env.PORT || 5001;
+var port = process.env.PORT || 5010;
 app.listen(port, function() {
   console.log("Starting Express server on port %d", port);
 });
@@ -349,7 +349,9 @@ var processTweet = function(tweet) {
 };
 
 var dailySummary = function(){
-  T.post('statuses/update', { status: 'hello world!' }, function(err, data, response) {
+  var status = 'Testing';
+
+  T.post('statuses/update', { status: status }, function(err, data, response) {
     console.log(data)
   });
 }
