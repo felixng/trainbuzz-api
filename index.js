@@ -361,6 +361,6 @@ setTimeout(startStream, 2000);
 
 // Cron Jobs
 var CronJob = require('cron').CronJob;
-new CronJob('30 0 * * * *', function() {
+new CronJob('00 30 00 * * *', function() {
   dailySummary();
-}, null, true, 'Europe/London');
+}, null, false, 'Europe/London');
