@@ -348,19 +348,21 @@ var processTweet = function(tweet) {
   });
 };
 
-var dailySummary = function(){
-  var status = 'Testing';
 
-  T.post('statuses/update', { status: status }, function(err, data, response) {
-    console.log(data)
-  });
-}
 
 // Start stream after short timeout to avoid triggering multi-connection errors
 setTimeout(startStream, 2000);
 
 // Cron Jobs
-var CronJob = require('cron').CronJob;
-new CronJob('00 30 00 * * *', function() {
-  dailySummary();
-}, null, true, 'Europe/London');
+// var dailySummary = function(){
+//   var status = 'Testing';
+
+//   T.post('statuses/update', { status: status }, function(err, data, response) {
+//     console.log(data)
+//   });
+// }
+
+// var CronJob = require('cron').CronJob;
+// new CronJob('00 30 00 * * *', function() {
+//   dailySummary();
+// }, null, true, 'Europe/London');
